@@ -1,0 +1,11 @@
+$kind: http-request
+name: "{{base_url}}/api/accounts/{{customer_id}}/withdraw"
+description: ""
+url: "{{base_url}}/api/accounts/{{customer_id}}/withdraw?amount=200"
+method: POST
+queryParams:
+  amount: "200"
+body:
+  type: json
+  content: ""
+order: 3050660561248264

@@ -1,0 +1,13 @@
+$kind: http-request
+description: ""
+url: "{{base_url}}/api/accounts/{{customer_id}}/deposit?amount=300"
+method: POST
+queryParams:
+  - key: amount
+    value: "300"
+    disabled: false
+    description: ""
+body:
+  type: json
+  content: ""
+order: 1849822387511088

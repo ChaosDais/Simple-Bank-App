@@ -1,0 +1,8 @@
+name: BankApp
+values:
+  - key: base_url
+    value: 'http://localhost:8080'
+    enabled: true
+  - key: customer_id
+    value: '1'
+    enabled: true
