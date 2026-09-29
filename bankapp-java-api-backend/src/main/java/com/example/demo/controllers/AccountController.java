@@ -21,32 +21,69 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    @GetMapping("/accounts")
+    public List<Account> getAllAccounts() {
+        return accountService.getAllAccounts();
+    }
+
     @GetMapping("/accounts/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable int id){
         Account account = accountService.getAccountById(id);
-        return ResponseEntity.ok(account);
+        return account == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(account);
     }
 
     @PostMapping("/accounts")
     public ResponseEntity<Account> createAccount(@RequestBody AccountCreationRequest creationRequest){
         Account savedAccount = accountService.createAccount(creationRequest.getUserId(), creationRequest.getType());
-        return ResponseEntity.ok(savedAccount);
+        return savedAccount == null
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.status(201).body(savedAccount);
+    }
+
+    @PutMapping("/accounts/{id}")
+    public ResponseEntity<Account> updateAccount(
+            @PathVariable int id,
+            @RequestBody AccountCreationRequest updateRequest) {
+        Account updatedAccount = accountService.updateAccount(id, updateRequest.getType());
+        return updatedAccount == null
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(updatedAccount);
+    }
+
+    @DeleteMapping("/accounts/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable int id) {
+        return accountService.deleteAccount(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 
     @PostMapping("/accounts/{id}/deposit")
     public ResponseEntity<Transaction> deposit(@PathVariable int id, @RequestParam double amount){
+        if (accountService.getAccountById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         Transaction transaction = accountService.deposit(id, amount);
         return ResponseEntity.ok(transaction);
     }
 
     @PostMapping("/accounts/{id}/withdraw")
     public ResponseEntity<Transaction> withdraw(@PathVariable int id, @RequestParam double amount){
+        if (accountService.getAccountById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         Transaction transaction = accountService.withdraw(id,amount);
-        return ResponseEntity.ok(transaction);
+        return transaction == null
+                ? ResponseEntity.badRequest().build()
+                : ResponseEntity.ok(transaction);
     }
 
     @GetMapping("/accounts/{id}/transactions")
-    public List<Transaction> getTransactions(@PathVariable int id){
-        return accountService.getTransactions(id);
+    public ResponseEntity<List<Transaction>> getTransactions(@PathVariable int id){
+        List<Transaction> transactions = accountService.getTransactions(id);
+        return transactions == null
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(transactions);
     }
 }

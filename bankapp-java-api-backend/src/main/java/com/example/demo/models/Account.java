@@ -23,6 +23,10 @@ public class Account {
         return accountType;
     }
 
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
     public double getBalance(){
         return balance;
     }

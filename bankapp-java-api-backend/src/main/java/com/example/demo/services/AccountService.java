@@ -22,8 +22,20 @@ public class AccountService {
         return accountRepository.getAccountById(id);
     }
 
+    public List<Account> getAllAccounts() {
+        return accountRepository.getAllAccounts();
+    }
+
     public Account createAccount(int userId, String accountType){
         return accountRepository.createAccount(userId, accountType);
+    }
+
+    public Account updateAccount(int id, String accountType) {
+        return accountRepository.updateAccount(id, accountType);
+    }
+
+    public boolean deleteAccount(int id) {
+        return accountRepository.deleteAccount(id);
     }
 
     public Transaction deposit(int accountId, double amount){
@@ -35,6 +47,7 @@ public class AccountService {
     }
 
     public List<Transaction> getTransactions(int accountId){
-        return transactionRepository.getTransactionHistory(getAccountById(accountId));
+        Account account = getAccountById(accountId);
+        return account == null ? null : transactionRepository.getTransactionHistory(account);
     }
 }
