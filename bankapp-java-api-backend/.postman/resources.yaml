@@ -2,6 +2,10 @@
 workspace:
   id: 0e1ab2b4-a66d-491a-8498-4b990c151ddd
 
+cloudResources:
+  collections:
+    ../postman/collections/BankApp API: b7cad4c1-1493-41f5-96a2-fdee5ae230c3
+
 # All resources in the `postman/` folder are automatically registered in Local View.
 # Point to additional files outside the `postman/` folder to register them individually. Example:
 #localResources:

@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/api/users/:customer_id/accounts"
+method: POST
+headers:
+  Content-Type: application/json
+pathVariables:
+  customer_id: "{{customer_id}}"
+body:
+  type: json
+  content: |-
+    {
+      "type": "SAVINGS"
+    }
+settings: {}
+order: 1000

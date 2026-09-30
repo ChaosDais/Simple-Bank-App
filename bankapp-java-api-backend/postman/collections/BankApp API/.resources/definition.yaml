@@ -1,0 +1,7 @@
+$kind: collection
+description: |-
+  API for the BankApp Java backend. Contains endpoints for managing bank customers.
+
+  Base URL is stored in the BankApp environment as {{base_url}}.
+variables:
+  baseUrl: "{{base_url}}"

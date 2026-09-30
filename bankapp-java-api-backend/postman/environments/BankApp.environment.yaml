@@ -1,2 +1,6 @@
 name: BankApp
-values: []
+values:
+  - key: baseUrl
+    value: ''
+  - key: customer_id
+    value: ''

@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/api/users/:customer_id"
+method: PUT
+headers:
+  Content-Type: application/json
+pathVariables:
+  customer_id: "{{customer_id}}"
+body:
+  type: json
+  content: |-
+    {
+      "name": "Jane But Different"
+    }
+settings: {}
+order: 3000
