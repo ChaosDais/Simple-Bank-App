@@ -1,19 +1,25 @@
 package com.example.demo.models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Document(collection = "users")
 public class User {
+    @Id
+    private String id;
     private String name;
-    private int userId;
+    @Transient
     private List<Account> accounts = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String name, int userId) {
+    public User(String name) {
         this.name = name;
-        this.userId = userId;
     }
 
     public String getName() {
@@ -24,16 +30,20 @@ public class User {
         this.name = name;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<Account> getAccounts() {
         return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public void addAccount(Account account) {

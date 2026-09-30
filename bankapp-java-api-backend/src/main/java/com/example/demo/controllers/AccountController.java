@@ -27,7 +27,7 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable int id){
+    public ResponseEntity<Account> getAccountById(@PathVariable String id){
         Account account = accountService.getAccountById(id);
         return account == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(account);
     }
@@ -42,7 +42,7 @@ public class AccountController {
 
     @PutMapping("/accounts/{id}")
     public ResponseEntity<Account> updateAccount(
-            @PathVariable int id,
+            @PathVariable String id,
             @RequestBody AccountCreationRequest updateRequest) {
         Account updatedAccount = accountService.updateAccount(id, updateRequest.getType());
         return updatedAccount == null
@@ -51,14 +51,14 @@ public class AccountController {
     }
 
     @DeleteMapping("/accounts/{id}")
-    public ResponseEntity<Void> deleteAccount(@PathVariable int id) {
+    public ResponseEntity<Void> deleteAccount(@PathVariable String id) {
         return accountService.deleteAccount(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping("/accounts/{id}/deposit")
-    public ResponseEntity<Transaction> deposit(@PathVariable int id, @RequestParam double amount){
+    public ResponseEntity<Transaction> deposit(@PathVariable String id, @RequestParam double amount){
         if (accountService.getAccountById(id) == null) {
             return ResponseEntity.notFound().build();
         }
@@ -68,7 +68,7 @@ public class AccountController {
     }
 
     @PostMapping("/accounts/{id}/withdraw")
-    public ResponseEntity<Transaction> withdraw(@PathVariable int id, @RequestParam double amount){
+    public ResponseEntity<Transaction> withdraw(@PathVariable String id, @RequestParam double amount){
         if (accountService.getAccountById(id) == null) {
             return ResponseEntity.notFound().build();
         }
@@ -80,7 +80,7 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/{id}/transactions")
-    public ResponseEntity<List<Transaction>> getTransactions(@PathVariable int id){
+    public ResponseEntity<List<Transaction>> getTransactions(@PathVariable String id){
         List<Transaction> transactions = accountService.getTransactions(id);
         return transactions == null
                 ? ResponseEntity.notFound().build()

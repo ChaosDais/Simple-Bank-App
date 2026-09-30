@@ -1,15 +1,10 @@
 package com.example.demo.repos;
 
-import com.example.demo.models.Account;
 import com.example.demo.models.Transaction;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-@Repository
-public class TransactionRepository {
-    // GET: Transaction History
-    public List<Transaction> getTransactionHistory(Account account){
-        return account.getTransactionHistory();
-    }
+public interface TransactionRepository extends MongoRepository<Transaction, String> {
+    List<Transaction> findByAccountId(String accountId);
 }

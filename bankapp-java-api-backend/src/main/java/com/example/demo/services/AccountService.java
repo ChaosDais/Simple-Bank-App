@@ -1,53 +1,107 @@
 package com.example.demo.services;
 
-import java.util.*;
-
-import com.example.demo.models.Transaction;
-import com.example.demo.repos.TransactionRepository;
-import org.springframework.stereotype.Service;
 import com.example.demo.models.Account;
+import com.example.demo.models.Transaction;
 import com.example.demo.repos.AccountRepository;
+import com.example.demo.repos.TransactionRepository;
+import com.example.demo.repos.UserRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountService {
-    private AccountRepository accountRepository;
-    private TransactionRepository transactionRepository;
+    private final AccountRepository accountRepository;
+    private final TransactionRepository transactionRepository;
+    private final UserRepository userRepository;
 
-    public AccountService(AccountRepository accountRepository, TransactionRepository transactionRepository){
+    public AccountService(
+            AccountRepository accountRepository,
+            TransactionRepository transactionRepository,
+            UserRepository userRepository) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
+        this.userRepository = userRepository;
     }
 
-    public Account getAccountById(int id){
-        return accountRepository.getAccountById(id);
+    public Account getAccountById(String id) {
+        Account account = accountRepository.findById(id).orElse(null);
+        return account == null ? null : attachTransactions(account);
     }
 
     public List<Account> getAllAccounts() {
-        return accountRepository.getAllAccounts();
+        List<Account> accounts = accountRepository.findAll();
+        accounts.forEach(this::attachTransactions);
+        return accounts;
     }
 
-    public Account createAccount(int userId, String accountType){
-        return accountRepository.createAccount(userId, accountType);
+    public List<Account> getAccountsByUserId(String userId) {
+        List<Account> accounts = accountRepository.findByUserId(userId);
+        accounts.forEach(this::attachTransactions);
+        return accounts;
     }
 
-    public Account updateAccount(int id, String accountType) {
-        return accountRepository.updateAccount(id, accountType);
+    public Account createAccount(String userId, String accountType) {
+        if (userId == null || !userRepository.existsById(userId)) {
+            return null;
+        }
+
+        return attachTransactions(accountRepository.save(new Account(accountType, userId)));
     }
 
-    public boolean deleteAccount(int id) {
-        return accountRepository.deleteAccount(id);
+    public Account updateAccount(String id, String accountType) {
+        Account account = accountRepository.findById(id).orElse(null);
+        if (account == null) {
+            return null;
+        }
+
+        account.setAccountType(accountType);
+        return attachTransactions(accountRepository.save(account));
     }
 
-    public Transaction deposit(int accountId, double amount){
-        return accountRepository.deposit(accountId, amount);
+    public boolean deleteAccount(String id) {
+        Optional<Account> account = accountRepository.findById(id);
+        if (account.isEmpty()) {
+            return false;
+        }
+
+        transactionRepository.deleteAll(transactionRepository.findByAccountId(id));
+        accountRepository.delete(account.get());
+        return true;
     }
 
-    public Transaction withdraw(int accountId, double amount){
-        return accountRepository.withdraw(accountId, amount);
+    public Transaction deposit(String accountId, double amount) {
+        Account account = accountRepository.findById(accountId).orElse(null);
+        if (account == null) {
+            return null;
+        }
+
+        account.setBalance(account.getBalance() + amount);
+        accountRepository.save(account);
+        return transactionRepository.save(new Transaction("DEPOSIT", amount, accountId));
     }
 
-    public List<Transaction> getTransactions(int accountId){
-        Account account = getAccountById(accountId);
-        return account == null ? null : transactionRepository.getTransactionHistory(account);
+    public Transaction withdraw(String accountId, double amount) {
+        Account account = accountRepository.findById(accountId).orElse(null);
+        if (account == null || account.getBalance() - amount < 0) {
+            return null;
+        }
+
+        account.setBalance(account.getBalance() - amount);
+        accountRepository.save(account);
+        return transactionRepository.save(new Transaction("WITHDRAW", amount, accountId));
+    }
+
+    public List<Transaction> getTransactions(String accountId) {
+        return accountRepository.existsById(accountId)
+                ? transactionRepository.findByAccountId(accountId)
+                : null;
+    }
+
+    private Account attachTransactions(Account account) {
+        account.setTransactionHistory(new ArrayList<>(transactionRepository.findByAccountId(account.getId())));
+        return account;
     }
 }
