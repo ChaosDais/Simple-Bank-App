@@ -1,7 +1,0 @@
-$kind: http-request
-url: "{{baseUrl}}/api/accounts/:customer_id"
-method: PUT
-pathVariables:
-  customer_id: "{{customer_id}}"
-settings: {}
-order: 4000

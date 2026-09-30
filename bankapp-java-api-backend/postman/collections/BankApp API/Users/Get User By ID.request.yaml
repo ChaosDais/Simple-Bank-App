@@ -1,7 +1,7 @@
 $kind: http-request
-url: "{{baseUrl}}/api/users/:customer_id/accounts"
+url: "{{baseUrl}}/api/users/:customer_id"
 method: GET
 pathVariables:
   customer_id: "{{customer_id}}"
 settings: {}
-order: 2000
+order: 4142249527122694

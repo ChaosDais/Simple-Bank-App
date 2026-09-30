@@ -2,6 +2,8 @@
 workspace:
   id: 0e1ab2b4-a66d-491a-8498-4b990c151ddd
 
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
 cloudResources:
   collections:
     ../postman/collections/BankApp API: b7cad4c1-1493-41f5-96a2-fdee5ae230c3
