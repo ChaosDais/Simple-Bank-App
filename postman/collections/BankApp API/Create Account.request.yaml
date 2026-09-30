@@ -1,14 +1,8 @@
 $kind: http-request
 description: ""
-url: "{{base_url}}/api/accounts"
+url: "{{base_url}}/api/users"
 method: POST
 body:
   type: json
-  content: "{\r
-
-    \  \"userId\": 101,\r
-
-    \  \"type\": \"CHECKING\"\r
-
-    }"
+  content: "{\r\n  \"name\": \"Joey\"\r\n}"
 order: 662437509465769
