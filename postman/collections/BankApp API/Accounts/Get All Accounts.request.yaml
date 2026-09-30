@@ -1,0 +1,5 @@
+$kind: http-request
+description: ""
+url: "{{base_url}}/api/accounts"
+method: GET
+order: 9520437461

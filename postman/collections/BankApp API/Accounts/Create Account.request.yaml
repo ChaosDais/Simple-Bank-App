@@ -1,0 +1,8 @@
+$kind: http-request
+description: ""
+url: "{{base_url}}/api/accounts"
+method: POST
+body:
+  type: json
+  content: ""
+order: 10620435104

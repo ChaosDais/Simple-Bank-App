@@ -1,0 +1,8 @@
+$kind: http-request
+name: Create User Account
+url: "{{base_url}}/api/users/{{customer_id}}/accounts"
+method: POST
+body:
+  type: json
+  content: "{\r\n    \"type\": \"SAVINGS\"\r\n}"
+order: 1748587954192

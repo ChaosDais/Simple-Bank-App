@@ -1,0 +1,215 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "BankApp API",
+    "version": "1.0.0",
+    "description": "API for the BankApp Java backend. Contains endpoints for managing bank customers.\n\nBase URL is stored in the BankApp environment as {{base_url}}."
+  },
+  "servers": [
+    {
+      "url": "{{base_url}}"
+    }
+  ],
+  "paths": {
+    "/api/users": {
+      "post": {
+        "summary": "Create User",
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "Joey"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Find All Users",
+        "responses": {}
+      }
+    },
+    "/api/users/{customer_id}": {
+      "get": {
+        "summary": "Get User By ID",
+        "responses": {}
+      },
+      "parameters": [
+        {
+          "name": "customer_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{customer_id}}"
+        }
+      ],
+      "put": {
+        "summary": "Update User",
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "Jane But Different"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete User",
+        "responses": {}
+      }
+    },
+    "/api/accounts/{customer_id}/deposit": {
+      "post": {
+        "summary": "Deposit",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 200
+          }
+        ],
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "customer_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{customer_id}}"
+        }
+      ]
+    },
+    "/api/accounts/{customer_id}/withdraw": {
+      "post": {
+        "summary": "Withdraw",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 200
+          }
+        ],
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "customer_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{customer_id}}"
+        }
+      ]
+    },
+    "/api/users/{customer_id}/accounts": {
+      "post": {
+        "summary": "Create User Account",
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "type": "SAVINGS"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "customer_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{customer_id}}"
+        }
+      ],
+      "get": {
+        "summary": "Get User Accounts",
+        "responses": {}
+      }
+    },
+    "/api/accounts/{customer_id}": {
+      "delete": {
+        "summary": "Delete Account",
+        "responses": {}
+      },
+      "parameters": [
+        {
+          "name": "customer_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{customer_id}}"
+        }
+      ],
+      "put": {
+        "summary": "Update Account",
+        "responses": {}
+      }
+    }
+  }
+}

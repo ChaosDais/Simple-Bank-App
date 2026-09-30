@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{base_url}}/api/users/{{customer_id}}/accounts"
+method: GET
+order: 1728613167318
