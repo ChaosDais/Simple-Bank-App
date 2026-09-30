@@ -1,15 +1,9 @@
-# Use this workspace to collaborate
 workspace:
   id: 0e1ab2b4-a66d-491a-8498-4b990c151ddd
-
-# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
-
 cloudResources:
   collections:
-    ../postman/collections/BankApp API: b7cad4c1-1493-41f5-96a2-fdee5ae230c3
-
-# All resources in the `postman/` folder are automatically registered in Local View.
-# Point to additional files outside the `postman/` folder to register them individually. Example:
-#localResources:
-#  collections:
-#    - ../tests/E2E Test Collection/
+    ../postman/collections/BankApp API: 58609188-c72fa7dc-7113-4d40-a363-80c825f1f9a5
+  environments:
+    ../postman/environments/BankApp.environment.yaml: 58609188-7c397cce-42ac-41a8-b472-149d0dfaf3ff
+  globals:
+    ../postman/globals/workspace.globals.yaml: fb7aadbb-cfd5-4b37-89b5-12c7ea73f63b
