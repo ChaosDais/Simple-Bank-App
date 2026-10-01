@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "BankappJavaApiBackendApplication",
+            "request": "launch",
+            "mainClass": "com.example.demo.BankappJavaApiBackendApplication",
+            "projectName": "bankapp-java-api-backend",
+            "envFile": "${workspaceFolder}/bankapp-java-api-backend/.env"
+        }
+    ]
+}
