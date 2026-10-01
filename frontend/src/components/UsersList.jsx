@@ -41,8 +41,22 @@ function UsersList() {
     <ul className="users-list">
       {users.map((user) => (
         <li key={user.id} className="users-list-item">
-          <span className="users-list-name">{user.name}</span>
-          <span className="users-list-id">{user.id}</span>
+          <div className="users-list-header">
+            <span className="users-list-name">{user.name}</span>
+            <span className="users-list-email">{user.email}</span>
+          </div>
+          {user.accounts && user.accounts.length > 0 ? (
+            <ul className="users-list-accounts">
+              {user.accounts.map((account) => (
+                <li key={account.id}>
+                  <span className="account-type">{account.accountType}</span>
+                  <span className="account-balance">${account.balance.toFixed(2)}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="users-list-no-accounts">No accounts</p>
+          )}
         </li>
       ))}
     </ul>

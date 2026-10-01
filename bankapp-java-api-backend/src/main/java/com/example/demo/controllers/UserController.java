@@ -2,6 +2,8 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.AccountCreationRequest;
+import com.example.demo.dto.SignInRequest;
+import com.example.demo.dto.SignUpRequest;
 import com.example.demo.models.Account;
 import com.example.demo.models.User;
 import com.example.demo.services.AccountService;
@@ -20,6 +22,23 @@ public class UserController {
     public UserController(UserService userService, AccountService accountService) {
         this.userService = userService;
         this.accountService = accountService;
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<User> signUp(@RequestBody SignUpRequest signUpRequest) {
+        try {
+            User user = userService.signUp(
+                    signUpRequest.getName(), signUpRequest.getEmail(), signUpRequest.getPassword());
+            return ResponseEntity.status(201).body(user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(409).build();
+        }
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<User> signIn(@RequestBody SignInRequest signInRequest) {
+        User user = userService.signIn(signInRequest.getEmail(), signInRequest.getPassword());
+        return user == null ? ResponseEntity.status(401).build() : ResponseEntity.ok(user);
     }
 
     @GetMapping

@@ -5,6 +5,8 @@ import com.example.demo.models.User;
 import com.example.demo.repos.AccountRepository;
 import com.example.demo.repos.TransactionRepository;
 import com.example.demo.repos.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserService(
             UserRepository userRepository,
@@ -38,6 +41,25 @@ public class UserService {
 
     public User createUser(String name) {
         return attachAccounts(userRepository.save(new User(name)));
+    }
+
+    public User signUp(String name, String email, String password) {
+        if (userRepository.existsByEmail(email)) {
+            throw new IllegalArgumentException("Email already in use");
+        }
+
+        String passwordHash = passwordEncoder.encode(password);
+        return attachAccounts(userRepository.save(new User(name, email, passwordHash)));
+    }
+
+    public User signIn(String email, String password) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if (user == null || user.getPasswordHash() == null
+                || !passwordEncoder.matches(password, user.getPasswordHash())) {
+            return null;
+        }
+
+        return attachAccounts(user);
     }
 
     public User updateUser(String userId, String name) {

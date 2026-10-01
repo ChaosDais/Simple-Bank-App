@@ -54,7 +54,8 @@
 
   h1 {
     text-align: center;
-    margin-bottom: 8px;
+    margin-top: 0;
+    margin-bottom: 20px;
   }
 
   p {
@@ -111,6 +112,34 @@
   }
 }
 
+.signin-status {
+  margin-top: 16px;
+  text-align: center;
+  color: var(--text-h);
+
+  &[data-status='error'] {
+    color: #c0392b;
+  }
+
+  &[data-status='success'] {
+    color: #2e7d32;
+  }
+}
+
+.signin-toggle {
+  margin-top: 12px;
+  text-align: center;
+
+  button {
+    font: inherit;
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 0;
+  }
+}
+
 .users-page {
   width: 100%;
   max-width: 480px;
@@ -131,12 +160,18 @@
 
 .users-list-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
   padding: 10px 16px;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--social-bg);
+}
+
+.users-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .users-list-name {
@@ -144,8 +179,37 @@
   color: var(--text-h);
 }
 
-.users-list-id {
+.users-list-email {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.users-list-accounts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text);
+  }
+}
+
+.account-type {
+  text-transform: capitalize;
+}
+
+.account-balance {
   font-family: var(--mono);
+}
+
+.users-list-no-accounts {
+  margin: 0;
   font-size: 13px;
   color: var(--text);
 }
