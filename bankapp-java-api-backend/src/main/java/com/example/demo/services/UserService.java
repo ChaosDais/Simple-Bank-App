@@ -1,16 +1,17 @@
 package com.example.demo.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.example.demo.models.Account;
 import com.example.demo.models.User;
 import com.example.demo.repos.AccountRepository;
 import com.example.demo.repos.TransactionRepository;
 import com.example.demo.repos.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserService {
@@ -44,12 +45,30 @@ public class UserService {
     }
 
     public User signUp(String name, String email, String password) {
+        return signUp(name, email, password, false);
+    }
+
+    public boolean adminAccountExists() {
+        return userRepository.existsByAdminTrue();
+    }
+
+    public User signUpAdmin(String name, String email, String password) {
+        if (adminAccountExists()) {
+            throw new IllegalStateException("An admin account already exists");
+        }
+
+        return signUp(name, email, password, true);
+    }
+
+    private User signUp(String name, String email, String password, boolean admin) {
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already in use");
         }
 
         String passwordHash = passwordEncoder.encode(password);
-        return attachAccounts(userRepository.save(new User(name, email, passwordHash)));
+        User user = new User(name, email, passwordHash);
+        user.setAdmin(admin);
+        return attachAccounts(userRepository.save(user));
     }
 
     public User signIn(String email, String password) {

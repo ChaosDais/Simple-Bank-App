@@ -91,6 +91,17 @@
   }
 }
 
+.signin-admin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+
+  input {
+    width: auto;
+  }
+}
+
 .signin-button {
   font: inherit;
   font-size: 16px;
@@ -184,6 +195,13 @@
   color: var(--text);
 }
 
+.users-list-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text);
+}
+
 .users-list-accounts {
   list-style: none;
   margin: 0;
@@ -212,4 +230,125 @@
   margin: 0;
   font-size: 13px;
   color: var(--text);
+}
+
+.admin-dashboard {
+  width: 100%;
+  max-width: 900px;
+
+  h2 {
+    margin-top: 32px;
+  }
+}
+
+.dashboard-toolbar {
+  margin-bottom: 16px;
+
+  input {
+    font: inherit;
+    font-size: 16px;
+    width: 100%;
+    max-width: 320px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-h);
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+  }
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  th,
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  th {
+    color: var(--text-h);
+    font-weight: 500;
+  }
+
+  td {
+    color: var(--text);
+  }
+}
+
+.dashboard-id {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.dashboard-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.dashboard-delete,
+.dashboard-delete-confirm {
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: none;
+  color: #c0392b;
+  border-color: #c0392b;
+}
+
+.dashboard-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+
+  button {
+    font: inherit;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+}
+
+.dashboard-delete-confirm {
+  background: #c0392b;
+  color: #fff;
+}
+
+.dashboard-add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+
+  input {
+    font: inherit;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-h);
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+  }
+
+  .signin-button {
+    margin-top: 0;
+  }
 }
