@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { apiUrl } from '../api'
 
 function formatAccounts(accounts) {
   if (!accounts || accounts.length === 0) return 'No accounts'
@@ -21,7 +22,7 @@ function AdminDashboard() {
   useEffect(() => {
     let cancelled = false
 
-    fetch('/api/users')
+    fetch(apiUrl('/api/users'))
       .then((res) => {
         if (!res.ok) throw new Error(`Request failed: ${res.status}`)
         return res.json()
@@ -52,7 +53,7 @@ function AdminDashboard() {
   const handleDelete = async (id) => {
     setDeleteError('')
     try {
-      const res = await fetch(`/api/users/${id}`, { method: 'DELETE' })
+      const res = await fetch(apiUrl(`/api/users/${id}`), { method: 'DELETE' })
       if (!res.ok) throw new Error(`Request failed: ${res.status}`)
       setUsers((prev) => prev.filter((user) => user.id !== id))
     } catch {
@@ -68,7 +69,7 @@ function AdminDashboard() {
     setAddMessage('')
 
     try {
-      const res = await fetch('/api/users/signup', {
+      const res = await fetch(apiUrl('/api/users/signup'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newName, email: newEmail, password: newPassword }),

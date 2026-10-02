@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { apiUrl } from '../api'
 
 function SignIn({ onSignIn }) {
   const [mode, setMode] = useState('signin')
@@ -16,7 +17,7 @@ function SignIn({ onSignIn }) {
   useEffect(() => {
     let cancelled = false
 
-    fetch('/api/users/admin-exists')
+    fetch(apiUrl('/api/users/admin-exists'))
       .then((res) => (res.ok ? res.json() : true))
       .then((exists) => {
         if (!cancelled) setAdminExists(exists)
@@ -44,7 +45,7 @@ function SignIn({ onSignIn }) {
     setMessage('')
 
     const signUpAsAdmin = isSignUp && asAdmin
-    const url = signUpAsAdmin
+    const path = signUpAsAdmin
       ? '/api/users/signup-admin'
       : isSignUp
         ? '/api/users/signup'
@@ -56,7 +57,7 @@ function SignIn({ onSignIn }) {
       : { email, password }
 
     try {
-      const res = await fetch(url, {
+      const res = await fetch(apiUrl(path), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
